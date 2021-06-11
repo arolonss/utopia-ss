@@ -14,22 +14,22 @@ public abstract class BaseDAO<T> {
 	public BaseDAO(Connection conn) {
 		this.conn = conn;
 	}
+	
+	public Integer saveAndReturnPrimaryKey(String sql, Object[] vals) throws ClassNotFoundException, SQLException {
+		PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); // thread safe method
 
-//	public Integer saveAndReturnPrimaryKey(String sql, Object[] vals) throws ClassNotFoundException, SQLException {
-//		PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); // thread safe method
-//
-//		int count = 1;
-//		for (Object o : vals) {
-//			pstmt.setObject(count, o);
-//			count++;
-//		}
-//		pstmt.executeUpdate();
-//		ResultSet rs = pstmt.getGeneratedKeys(); // try this or .executeQuery()
-//		while (rs.next()) {
-//			return rs.getInt(1); // or try 0
-//		}
-//		return null;
-//	}
+		int count = 1;
+		for (Object o : vals) {
+			pstmt.setObject(count, o);
+			count++;
+		}
+		pstmt.executeUpdate();
+		ResultSet rs = pstmt.getGeneratedKeys(); // try this or .executeQuery()
+		while (rs.next()) {
+			return rs.getInt(1); // or try 0
+		}
+		return null;
+	}
 
 	public void save(String sql, Object[] vals) throws ClassNotFoundException, SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
