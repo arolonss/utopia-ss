@@ -18,6 +18,10 @@ public class Route {
 	public Integer getId() {
 		return id;
 	}
+	@Override
+	public String toString() {
+		return "Route [id=" + id + ", destId=" + destId + ", orgId=" + orgId + "]";
+	}
 	/**
 	 * @param id the id to set
 	 */

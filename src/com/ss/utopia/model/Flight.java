@@ -1,12 +1,14 @@
 package com.ss.utopia.model;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 
 public class Flight {
 
 	private Integer id;
 	private Route routeId;
-	private Time depTime;
+	private Airplane airplaneId;
+	private Timestamp depTime;
 	private Integer reservedSeats;
 	private Float seatPrice;
 	/**
@@ -21,6 +23,11 @@ public class Flight {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	@Override
+	public String toString() {
+		return "Flight [id=" + id + ", routeId=" + routeId + ", airplaneId=" + airplaneId + ", depTime=" + depTime
+				+ ", reservedSeats=" + reservedSeats + ", seatPrice=" + seatPrice + "]";
+	}
 	/**
 	 * @return the routeId
 	 */
@@ -34,16 +41,28 @@ public class Flight {
 		this.routeId = routeId;
 	}
 	/**
+	 * @return the airplaneId
+	 */
+	public Airplane getAirplaneId() {
+		return airplaneId;
+	}
+	/**
+	 * @param airplaneId the airplaneId to set
+	 */
+	public void setAirplaneId(Airplane airplaneId) {
+		this.airplaneId = airplaneId;
+	}
+	/**
 	 * @return the depTime
 	 */
-	public Time getDepTime() {
+	public Timestamp getDepTime() {
 		return depTime;
 	}
 	/**
-	 * @param depTime the depTime to set
+	 * @param time the depTime to set
 	 */
-	public void setDepTime(Time depTime) {
-		this.depTime = depTime;
+	public void setDepTime(Timestamp time) {
+		this.depTime = time;
 	}
 	/**
 	 * @return the reservedSeats
