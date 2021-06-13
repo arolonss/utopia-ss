@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ss.utopia.model.Airport;
 import com.ss.utopia.model.Route;
 
 public class RouteDAO extends BaseDAO<Route> {
@@ -27,8 +28,13 @@ public class RouteDAO extends BaseDAO<Route> {
 	}
 
 	public List<Route> readAllRoutes() throws ClassNotFoundException, SQLException {
+		System.out.println("in dao");
 		return read("select * from routes", null);
 
+	}
+
+	public List<Route> readRouteById(Integer routeId) throws ClassNotFoundException, SQLException {
+		return read("select * from route where id = ?", new Object[] { routeId });
 	}
 
 	public List<Route> readRoutesbyAirportCode(String airportCode) throws ClassNotFoundException, SQLException {
@@ -45,12 +51,19 @@ public class RouteDAO extends BaseDAO<Route> {
 		List<Route> routes = new ArrayList<>();
 		while (rs.next()) {
 			Route r = new Route();
+			Airport org = new Airport();
+			Airport dest = new Airport();
+			
 			r.setId(rs.getInt("id"));
-			r.getOrgId().setAirportCode(rs.getString("origin_id"));
-			r.getDestId().setAirportCode(rs.getString("destination_id"));
+			org.setAirportCode(rs.getString("origin_id"));
+			r.setOrgId(org);
+			dest.setAirportCode(rs.getString("destination_id"));
+			r.setDestId(dest);
+			
 			routes.add(r);
 		}
 		return routes;
 	}
+
 
 }

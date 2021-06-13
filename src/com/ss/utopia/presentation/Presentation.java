@@ -4,6 +4,7 @@
 package com.ss.utopia.presentation;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 
 /**
  * @author amanda
@@ -18,5 +19,5 @@ public abstract class Presentation {
 		
 	}
 
-	abstract public void menu() throws SQLException, ClassNotFoundException;
+	abstract public void menu() throws SQLException, ClassNotFoundException, ParseException;
 }

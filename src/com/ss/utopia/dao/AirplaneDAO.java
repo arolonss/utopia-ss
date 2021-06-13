@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ss.utopia.model.Airplane;
+import com.ss.utopia.model.AirplaneType;
 import com.ss.utopia.model.User;
 
 public class AirplaneDAO extends BaseDAO<Airplane> {
@@ -27,7 +28,7 @@ public class AirplaneDAO extends BaseDAO<Airplane> {
 		save("delete from user where id = ?", new Object[] { u.getId() });
 	}
 
-	public List<Airplane> read() throws SQLException, ClassNotFoundException {
+	public List<Airplane> readAll() throws SQLException, ClassNotFoundException {
 		return read("select * from airplane", null);
 
 	}
@@ -41,13 +42,16 @@ public class AirplaneDAO extends BaseDAO<Airplane> {
 		List<Airplane> airplanes = new ArrayList<>();
 		while (rs.next()) {
 			Airplane a = new Airplane();
-
+            AirplaneType type = new AirplaneType();
 			a.setId(rs.getInt("id"));
-			a.getTypeId().setId(rs.getInt("type_id"));
-
+			type.setId(rs.getInt("type_id"));
+            a.setTypeId(type);
 			airplanes.add(a);
 		}
 		return airplanes;
 	}
+
+
+
 
 }
