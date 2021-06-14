@@ -24,8 +24,8 @@ public class UserDAO extends BaseDAO<User> {
 	}
 
 	public void update(User u) throws SQLException, ClassNotFoundException {
-		save("update user set role_id = ?, given_name = ?, family_name = ?, username = ?, email = ?, password = ? phone = ? where id = ?",
-				new Object[] { u.getRole(), u.getFirstName(), u.getLastName(), u.getUsername(), u.getEmail(),
+		save("update user set given_name = ?, family_name = ?, username = ?, email = ?, password = ?, phone = ? where id = ?",
+				new Object[] {  u.getFirstName(), u.getLastName(), u.getUsername(), u.getEmail(),
 						u.getPassword(), u.getPhone(), u.getId() });
 	}
 

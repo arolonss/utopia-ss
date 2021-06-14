@@ -163,7 +163,7 @@ public class AdminPresentation extends Presentation {
 		System.out.println("5) Quit to previous");
 		try {
 
-			Integer opt = Integer.parseInt(sc.nextLine());
+			Integer opt = sc.nextInt();
 			System.out.println(opt);
 
 			switch (opt)
@@ -173,7 +173,7 @@ public class AdminPresentation extends Presentation {
 				au.add(1);
 				break;
 			case 2:
-				System.out.println(admin);
+				
 				System.out.println("View agents");
 				au.readAllAgents().forEach(a -> System.out.println(a.toString()));
 				agentOptions();
@@ -184,7 +184,7 @@ public class AdminPresentation extends Presentation {
 
 				System.out.println("Choose agent to Update by id");
 
-				id = Integer.parseInt(sc.nextLine());
+				id = sc.nextInt();
 
 				System.out.println(au.readAgentById(id));
 
