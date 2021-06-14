@@ -10,12 +10,14 @@ import java.util.List;
 
 import com.ss.utopia.dao.AirplaneDAO;
 import com.ss.utopia.dao.AirportDAO;
+import com.ss.utopia.dao.BookingDAO;
 import com.ss.utopia.dao.FlightDAO;
 import com.ss.utopia.dao.RouteDAO;
 import com.ss.utopia.dao.UserDAO;
 import com.ss.utopia.dao.UserRoleDAO;
 import com.ss.utopia.model.Airplane;
 import com.ss.utopia.model.Airport;
+import com.ss.utopia.model.Booking;
 import com.ss.utopia.model.Flight;
 import com.ss.utopia.model.Route;
 import com.ss.utopia.model.User;
@@ -28,7 +30,7 @@ public class AdminService {
 
 	Util util = new Util();
 
-    public void addFlight(Integer id, Integer routeId, Integer airplane, Timestamp dTime, Integer reservedSeats, Float seatPrice) throws SQLException {
+    public void addFlight(Integer id, Route routeId, Airplane airplane, Timestamp dTime, Integer reservedSeats, Float seatPrice) throws SQLException {
     	Connection conn = null;
     	try {
     		conn = util.getConnection();
@@ -36,16 +38,15 @@ public class AdminService {
     	    RouteDAO rdao = new RouteDAO(conn);
     	    AirplaneDAO adao = new AirplaneDAO(conn);
     	    Flight f = new Flight();
-    	    Route r = rdao.readRouteById(routeId).get(0);
-    	    Airplane a = adao.readById(routeId).get(0);
-    		//System.out.println(flight.getId());
-    	    System.out.println(r.toString());
-    	    System.out.println(a.toString());
-    	    
+            
+    		System.out.println(airplane);
+    		rdao.addRoute(routeId);
+    	    //adao.add(airplane);
+    	   
     	    
     		f.setId(id);
-    		f.setRouteId(r);
-    		f.setAirplaneId(a);
+    		f.setRouteId(routeId);
+    		f.setAirplaneId(airplane);
     		f.setDepTime(dTime);
     		f.setReservedSeats(reservedSeats);
     		f.setSeatPrice(seatPrice);
@@ -58,6 +59,8 @@ public class AdminService {
 //    		System.out.println(flight.getRouteId().getId());
 //    		System.out.println(flight.getAirplaneId().getTypeId());
 //    		System.out.println(flight.getDepTime());
+    	    System.out.println(routeId);
+    	    System.out.println(airplane);
     		System.out.println(f.toString());
     		
 
@@ -433,6 +436,83 @@ public class AdminService {
     		conn.close();
     	}
 		
+	}
+
+
+	public List<Booking> readAllBookings() throws SQLException {
+    	Connection conn = null;
+    	List<Booking> bookings = new ArrayList<>();
+    	try {
+    		conn = util.getConnection();
+    		BookingDAO bdao = new BookingDAO(conn);
+    		bookings = bdao.readAll();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		conn.rollback();
+    	} finally {
+    		conn.close();
+    	}
+    	return bookings;
+		
+	}
+
+
+	public Booking readBookingById(Integer id) throws SQLException {
+	   	Connection conn = null;
+    	List<Booking> b = new ArrayList<>();
+    	try {
+    		conn = util.getConnection();
+    		BookingDAO bdao = new BookingDAO(conn);
+    		b = bdao.readById(id);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		conn.rollback();
+    	} finally {
+    		conn.close();
+    	}
+    	return b.get(0);
+		
+	}
+
+
+	public void overRideCancellation(Booking b) throws SQLException {
+    	Connection conn = null;
+    	try {
+    		conn = util.getConnection();
+    		BookingDAO bdao = new BookingDAO(conn);
+ 
+           
+    	
+    	    bdao.update(b);
+    	    conn.commit();
+    	    System.out.println("Cancelled!");
+    	    pres.menu();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		
+    		conn.rollback();
+    		System.out.println("Request not completed!");
+    	} finally {
+    		conn.close();
+    	}
+		
+	}
+
+
+	public List<Booking> readActiveBookings() throws SQLException {
+    	Connection conn = null;
+    	List<Booking> bookings = new ArrayList<>();
+    	try {
+    		conn = util.getConnection();
+    		BookingDAO bdao = new BookingDAO(conn);
+    		bookings = bdao.readAll();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		conn.rollback();
+    	} finally {
+    		conn.close();
+    	}
+    	return bookings;
 	}
 
 

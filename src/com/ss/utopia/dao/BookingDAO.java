@@ -18,17 +18,21 @@ public class BookingDAO extends BaseDAO<Booking>{
 	
 	public void add(Booking b) throws SQLException, ClassNotFoundException {
 		saveAndReturnPrimaryKey("insert into booking (is_active, confirmation_code) values (?, ?)",
-				new Object[] { b.isIs_active(), b.getConfCode() });
+				new Object[] { b.getIs_active(), b.getConfCode() });
 	}
 	
 	public void update(Booking b) throws SQLException, ClassNotFoundException {
 		save("update booking set is_active = ?, confirmation_code = ? where id = ?",
-				new Object[] { b.getBookingNo() });
+				new Object[] { b.getIs_active(), b.getConfCode(), b.getBookingNo() });
 	}
 	
 
 	public void delete(Booking b) throws SQLException, ClassNotFoundException {
 		save("delete from booking where id = ?", new Object[] { b.getBookingNo() } );
+	}
+	
+	public List<Booking> readActiveBookings() throws ClassNotFoundException, SQLException {
+		return read("select * from booking where is_active = 1", null);
 	}
 	
 	public List<Booking> readAll() throws SQLException, ClassNotFoundException {
@@ -49,8 +53,8 @@ public class BookingDAO extends BaseDAO<Booking>{
 			Booking b = new Booking();
 			
 			b.setBookingNo(rs.getInt("id"));
-			b.setIs_active(rs.getBoolean("is_active")); 
-			
+			b.setIs_active(rs.getInt("is_active")); 
+			b.setConfCode(rs.getString("confirmation_code"));
 			bookings.add(b);
 		}
 		return bookings;

@@ -3,11 +3,12 @@ package com.ss.utopia.presentation.admin;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
-
 
 import com.ss.utopia.app.Main;
 import com.ss.utopia.model.Agent;
+import com.ss.utopia.model.Booking;
 import com.ss.utopia.model.User;
 import com.ss.utopia.presentation.Presentation;
 import com.ss.utopia.service.AdminService;
@@ -15,13 +16,13 @@ import com.ss.utopia.service.AdminService;
 public class AdminPresentation extends Presentation {
 	static Scanner sc = new Scanner(System.in);
 	static AdminService admin = new AdminService();
+
 	public AdminPresentation() {
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void menu() throws SQLException, ClassNotFoundException, ParseException {
-		
+	public void menu() throws Exception {
 
 		System.out.println("Welcome Admin!");
 		System.out.println("What are you working on today?");
@@ -35,7 +36,7 @@ public class AdminPresentation extends Presentation {
 		System.out.println("8) Quit to previous");
 
 		try {
-			Integer opt = Integer.parseInt(sc.nextLine());
+			Integer opt = sc.nextInt();
 			System.out.println(opt);
 
 			switch (opt)
@@ -70,15 +71,14 @@ public class AdminPresentation extends Presentation {
 				menu();
 			}
 		} catch (InputMismatchException e) {
-			System.out.println("You must select an integer!"); //fix this later (parseInt?)
+			System.out.println("You must select an integer!"); // fix this later (parseInt?)
 			menu();
 		}
 
-
 	}
 
-	private void airportOptions() throws ClassNotFoundException, SQLException, ParseException {
-		
+	private void airportOptions() throws Exception {
+
 		AdminAirport aa = new AdminAirport(admin);
 		Integer id;
 		System.out.println("1) Add an airport");
@@ -106,15 +106,13 @@ public class AdminPresentation extends Presentation {
 
 			case 3:
 				aa.readAll().forEach(a -> System.out.println(a.toString()));
-				
+
 				System.out.println("Choose airport to Update by id");
-                
+
 				id = Integer.parseInt(sc.nextLine());
-               
-                
 
 				aa.update(id);
-				
+
 				break;
 
 			case 4:
@@ -137,17 +135,25 @@ public class AdminPresentation extends Presentation {
 			airportOptions();
 		}
 		sc.close();
-		
+
 	}
 
-	private void overRideCancellation() {
+	private void overRideCancellation() throws Exception {
 		System.out.println("Select a booking to override cancel");
-		// list bookings
-		
+		List<Booking> activeBookings = admin.readActiveBookings();
+		activeBookings
+				.forEach(b -> System.out.println(b.getBookingNo() + " " + b.getIs_active() + " " + b.getConfCode()));
+		Integer selection = sc.nextInt();
+		Booking overrideBooking = admin.readBookingById(selection);
+
+		overrideBooking.setIs_active(0);
+		overrideBooking.setConfCode("UTP" + (int) (Math.random() * 9999 + 1));
+		admin.overRideCancellation(overrideBooking);
+		menu();
 	}
 
-	private void agentOptions() throws ClassNotFoundException, SQLException, ParseException {
-		
+	private void agentOptions() throws Exception {
+
 		AdminUser au = new AdminUser(admin);
 		Integer id;
 		System.out.println("1) Add an agent");
@@ -175,16 +181,15 @@ public class AdminPresentation extends Presentation {
 
 			case 3:
 				au.readAllAgents().forEach(a -> System.out.println(a.toString()));
-				
+
 				System.out.println("Choose agent to Update by id");
-                
+
 				id = Integer.parseInt(sc.nextLine());
-               
-                
+
 				System.out.println(au.readAgentById(id));
-                
+
 				au.update(id);
-				
+
 				break;
 
 			case 4:
@@ -207,12 +212,11 @@ public class AdminPresentation extends Presentation {
 			agentOptions();
 		}
 		sc.close();
-		
-		
+
 	}
 
-	private void travelerOptions() throws ClassNotFoundException, SQLException, ParseException {
-		
+	private void travelerOptions() throws Exception {
+
 		AdminUser au = new AdminUser(admin);
 		Integer id;
 		System.out.println("1) Add a traveler");
@@ -235,10 +239,10 @@ public class AdminPresentation extends Presentation {
 				System.out.println(admin);
 				System.out.println("View travelers");
 				au.readAllTravelers();
-		
+
 				au.readAllTravelers().forEach(a -> System.out.println(a.toString()));
 				travelerOptions();
-			
+
 				break;
 
 			case 3:
@@ -253,24 +257,23 @@ public class AdminPresentation extends Presentation {
 				System.out.println(id);
 				au.deleteTraveler(id);
 
-
 				break;
 			case 5:
 				menu();
 				break;
 			default:
 				System.out.println("invalid input");
-				flightOptions();
+				travelerOptions();
 			}
 		} catch (InputMismatchException e) {
 			System.out.println("You must select an integer!");
-			flightOptions();
+			travelerOptions();
 		}
 		sc.close();
-		
-		
+
 	}
-   // not done yet
+
+	// not done yet
 	private void ticketAndPassengerOptions() {
 //		AdminPassenger ap = new AdminPassenger(admin);
 //		Integer id;
@@ -332,9 +335,10 @@ public class AdminPresentation extends Presentation {
 //			ticketAndPassengerOptions();
 //		}
 //		sc.close();
-		
+
 	}
-    /// not done yet
+
+	/// not done yet
 	private void seatOptions() {
 //		AdminUser au = new AdminUser(admin);
 //		Integer id;
@@ -399,10 +403,10 @@ public class AdminPresentation extends Presentation {
 //		
 	}
 
-	private void flightOptions() throws ClassNotFoundException, SQLException, ParseException {
-		
+	private void flightOptions() throws Exception {
+
 		AdminFlight af = new AdminFlight(admin);
-        Integer id;
+		Integer id;
 		System.out.println("1) Add a flight");
 		System.out.println("2) View flights");
 		System.out.println("3) Update a flight");
@@ -410,7 +414,7 @@ public class AdminPresentation extends Presentation {
 		System.out.println("5) Quit to previous");
 		try {
 
-			Integer opt = Integer.parseInt(sc.nextLine());
+			Integer opt = sc.nextInt();
 			System.out.println(opt);
 
 			switch (opt)
@@ -430,12 +434,11 @@ public class AdminPresentation extends Presentation {
 				af.readAll();
 				System.out.println("choose flight to Update");
 			case 4:
-				af.readAll();  //.forEach(f -> System.out.println(f.toString()));
+				af.readAll(); // .forEach(f -> System.out.println(f.toString()));
 				System.out.println("Select a flight to delete");
 				id = Integer.parseInt(sc.nextLine());
 				System.out.println(id);
 				af.delete(id);
-
 
 				break;
 			case 5:
@@ -450,7 +453,7 @@ public class AdminPresentation extends Presentation {
 			flightOptions();
 		}
 		sc.close();
-		
+
 	}
 
 }
