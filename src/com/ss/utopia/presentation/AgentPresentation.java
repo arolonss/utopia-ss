@@ -101,6 +101,20 @@ public class AgentPresentation extends Presentation {
 		System.out.println("List seats by First, Business, Economy");
 		//Take input
 		System.out.println("Return to previous menu");
+//		switch(seatClass) {
+//		
+//		case 1:
+//			
+//			break;
+//		case 2:
+//			break;
+//		case 3:
+//			break;
+//		case 4:
+//			flightOptions(flight);
+//		default:
+//			
+//		}
 	
 	}
 

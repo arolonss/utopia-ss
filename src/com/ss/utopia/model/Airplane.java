@@ -4,12 +4,18 @@ public class Airplane {
 	
 	private Integer id;
 	private AirplaneType typeId;
+	
+	@Override
+	public String toString() {
+		return "Airplane [id=" + id + ", typeId=" + typeId + "]";
+	}
 	/**
 	 * @return the id
 	 */
 	public Integer getId() {
 		return id;
 	}
+
 	/**
 	 * @param id the id to set
 	 */

@@ -34,7 +34,7 @@ public class ReadAirport {
         // statement
 		//Statement stmt = conn.createStatement();
 		// you can only have one PreparedStatement
-		PreparedStatement pstmt = conn.prepareStatement("select * from airport where iata_id like ?");
+		PreparedStatement pstmt = conn.prepareStatement("select * from route where origin_id like ?");
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter Airport code to search: ");
 		String airportCode = sc.nextLine();
@@ -51,3 +51,19 @@ public class ReadAirport {
 	}
 
 }
+
+
+
+//PreparedStatement pstmt = conn.prepareStatement("select * from airport where iata_id like ?");
+//Scanner sc = new Scanner(System.in);
+//System.out.println("Enter Airport code to search: ");
+//String airportCode = sc.nextLine();
+//sc.close();
+//pstmt.setString(1, airportCode); //based on datatype
+////String sql = "select * from airport where iata_id like '"+airportCode+"'"; // replace like with =
+////String sql = "select * from airport";
+////ResultSet rs = stmt.executeQuery();
+//ResultSet rs = pstmt.executeQuery(); // .executeBatch commits by default 
+//while(rs.next()) {
+//	System.out.println(rs.getString("iata_id"));
+//	System.out.println(rs.getString("city"));

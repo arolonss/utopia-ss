@@ -28,7 +28,6 @@ public class RouteDAO extends BaseDAO<Route> {
 	}
 
 	public List<Route> readAllRoutes() throws ClassNotFoundException, SQLException {
-		System.out.println("in dao");
 		return read("select * from routes", null);
 
 	}
@@ -53,15 +52,23 @@ public class RouteDAO extends BaseDAO<Route> {
 			Route r = new Route();
 			Airport org = new Airport();
 			Airport dest = new Airport();
-			
 			r.setId(rs.getInt("id"));
+			System.out.println("in dao extract data");
 			org.setAirportCode(rs.getString("origin_id"));
 			r.setOrgId(org);
 			dest.setAirportCode(rs.getString("destination_id"));
 			r.setDestId(dest);
+
+			System.out.println(rs.getInt("id"));
+			System.out.println(rs.getString("origin_id"));
+			System.out.println(rs.getString("destination_id"));
+		
+			System.out.println("in dao extract data done");
 			
+
 			routes.add(r);
 		}
+		System.out.println(routes + "from extract data");
 		return routes;
 	}
 

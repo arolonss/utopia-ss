@@ -49,10 +49,13 @@ public class FlightDAO extends BaseDAO<Flight> {
 			Route r = new Route();
 			Airplane a = new Airplane();
 			r.setId(rs.getInt("route_id"));
+			f.setRouteId(r);
+			
+			
 			a.setId(rs.getInt("airplane_id"));
 			
 			f.setId(rs.getInt("id"));
-			f.setRouteId(r);
+			
 			f.setAirplaneId(a);
 			f.setDepTime(rs.getTimestamp("departure_time"));
 			f.setReservedSeats(rs.getInt("reserved_seats"));

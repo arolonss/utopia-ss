@@ -4,11 +4,15 @@
 package com.ss.utopia.app;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import com.ss.utopia.presentation.AgentPresentation;
 import com.ss.utopia.presentation.Presentation;
+import com.ss.utopia.presentation.TravelerPresentation;
+import com.ss.utopia.presentation.admin.AdminPresentation;
+import com.ss.utopia.service.TravelerService;
 
 /**
  * @author amanda
@@ -16,36 +20,39 @@ import com.ss.utopia.presentation.Presentation;
  */
 public class Main {
 	static Scanner sc = new Scanner(System.in);
+	static Presentation pres = null;
+
 	/**
 	 * @param args
+	 * @throws ParseException
 	 */
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-
-		
-		Presentation pres = null;
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, ParseException {
 
 		System.out.println("Welcome to Utopia Airlines Management System!");
 		System.out.println("Which category user are you?");
-		System.out.println("1) I am an agent");
+		System.out.println("1) I am an agent (Coming Soon!)");
 		System.out.println("2) I am an admin");
 		System.out.println("3) I am a traveler");
 		try {
-			Integer userInput = sc.nextInt();
+			Integer userInput = Integer.parseInt(sc.nextLine());
 			System.out.println(userInput);
 
 			switch (userInput) {
 			case 1:
-				pres = new AgentPresentation();
-				pres.menu();
+				System.out.println("Under construction. Please check back soon!");
+//				pres = new AgentPresentation();
+//				pres.menu();
+				main(null);
 				break;
 			case 2:
 				System.out.println("Go to admin pres");
-				// pres = new AdminPresentation();
-				// pres.menu();
+				pres = new AdminPresentation();
+				pres.menu();
 				break;
 			case 3:
-				System.out.println("confirm member number and send to traveler pres");
-				// getMemberNo();
+				verifyMembership();
+				pres = new TravelerPresentation();
+				pres.menu();
 				break;
 			default:
 
@@ -55,12 +62,35 @@ public class Main {
 			}
 
 		} catch (ClassNotFoundException e) {
-			
+
 			System.out.println("Invalid input. Please use an integer.");
-			
+
 			main(null);
 			exit();
 		}
+	}
+
+	private static void verifyMembership() throws ClassNotFoundException, SQLException, ParseException {
+		TravelerService ts = new TravelerService();
+		String username;
+		System.out.println("Enter your username: ");
+
+		sc.useDelimiter("\\t");
+		while (true) {
+			username = sc.nextLine();
+			System.out.println("Verifying username in database...");
+			
+			break;
+		}
+		if (ts.verifyMembership(username)) {
+			pres = new TravelerPresentation();
+			pres.menu();
+		} else {
+			System.out.println("invalid username. Try again later.");
+			main(null);
+
+		}
+
 	}
 
 	public static void exit() {

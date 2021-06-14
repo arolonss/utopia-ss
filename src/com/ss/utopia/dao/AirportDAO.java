@@ -22,7 +22,7 @@ public class AirportDAO extends BaseDAO<Airport>{
 	}
 
 	public void update(Airport a) throws SQLException, ClassNotFoundException {
-		save("update aiport set city = ? where iata_id = ?", new Object[] { a.getCity(), a.getAirportCode() });
+		save("update airport set city = ? where iata_id = ?", new Object[] { a.getCity(), a.getAirportCode() });
 	}
 
 	public void delete(Airport a) throws SQLException, ClassNotFoundException {
