@@ -16,9 +16,9 @@ public class FlightBookingsDAO extends BaseDAO<FlightBookings>{
 	}
 
 	
-	public void add(FlightBookings fb) throws SQLException, ClassNotFoundException {
-		save("insert into flight_bookings (flight_id, booking_id) values (?, ?)",
-				new Object[] { fb.getFlightId(), fb.getBookingId() });
+	public Integer add(Integer flightId, Integer bookingId) throws SQLException, ClassNotFoundException {
+		return saveAndReturnPrimaryKey("insert into flight_bookings (flight_id, booking_id) values (?, ?)",
+				new Object[] { flightId, bookingId });
 	}
 	
 	

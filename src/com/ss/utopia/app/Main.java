@@ -24,9 +24,9 @@ public class Main {
 
 	/**
 	 * @param args
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) throws ClassNotFoundException, SQLException, ParseException {
+	public static void main(String[] args) throws Exception {
 
 		System.out.println("Welcome to Utopia Airlines Management System!");
 		System.out.println("Which category user are you?");
@@ -45,7 +45,6 @@ public class Main {
 				main(null);
 				break;
 			case 2:
-				System.out.println("Go to admin pres");
 				pres = new AdminPresentation();
 				pres.menu();
 				break;
@@ -70,7 +69,7 @@ public class Main {
 		}
 	}
 
-	private static void verifyMembership() throws ClassNotFoundException, SQLException, ParseException {
+	private static void verifyMembership() throws Exception {
 		TravelerService ts = new TravelerService();
 		String username;
 		System.out.println("Enter your username: ");

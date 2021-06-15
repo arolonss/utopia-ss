@@ -88,7 +88,7 @@ public class AdminPresentation extends Presentation {
 		System.out.println("5) Quit to previous");
 		try {
 
-			Integer opt = Integer.parseInt(sc.nextLine());
+			Integer opt = sc.nextInt();
 			System.out.println(opt);
 
 			switch (opt)
@@ -109,9 +109,9 @@ public class AdminPresentation extends Presentation {
 
 				System.out.println("Choose airport to Update by id");
 
-				id = Integer.parseInt(sc.nextLine());
+				String acode = sc.nextLine();
 
-				aa.update(id);
+				aa.update(acode);
 
 				break;
 
@@ -226,7 +226,7 @@ public class AdminPresentation extends Presentation {
 		System.out.println("5) Quit to previous");
 		try {
 
-			Integer opt = Integer.parseInt(sc.nextLine());
+			Integer opt = sc.nextInt();
 			System.out.println(opt);
 
 			switch (opt)
@@ -246,8 +246,15 @@ public class AdminPresentation extends Presentation {
 				break;
 
 			case 3:
-				au.readAllTravelers();
-				System.out.println("choose traveler to Update");
+				au.readAllTravelers().forEach(a -> System.out.println(a.toString()));
+
+				System.out.println("Choose traveler to Update by id");
+
+				id = sc.nextInt();
+
+				System.out.println(au.readTravelerById(id));
+
+				au.update(id);
 				break;
 
 			case 4:

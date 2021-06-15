@@ -48,7 +48,7 @@ public class AdminAirport implements AdminCrud<Airport> {
 	}
 
 
-	public void update(Object obj) throws SQLException, ClassNotFoundException, ParseException {
+	public void update(Object obj) throws Exception {
 		Airport a = new Airport();
 
 		System.out.println("Edit an airport:");

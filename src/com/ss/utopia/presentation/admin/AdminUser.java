@@ -272,4 +272,9 @@ public class AdminUser implements AdminCrud<User> {
 		return phone;
 		
 	}
+
+
+	public User readTravelerById(Integer id) throws SQLException {
+		return admin.readTravelerById(id);
+	}
 }

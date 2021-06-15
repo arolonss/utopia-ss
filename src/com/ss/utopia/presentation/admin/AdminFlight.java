@@ -10,9 +10,11 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.ss.utopia.model.Airplane;
+import com.ss.utopia.model.Airport;
 import com.ss.utopia.model.Flight;
 import com.ss.utopia.model.Route;
 import com.ss.utopia.service.AdminService;
+import com.sun.tools.javac.Main;
 
 public class AdminFlight implements AdminCrud<Flight> {
 
@@ -25,14 +27,16 @@ public class AdminFlight implements AdminCrud<Flight> {
 	}
 
 	
-	public void add() throws SQLException, ClassNotFoundException, ParseException {
+	public void add() throws Exception {
 		Flight f = new Flight();
 	    
 		
-		Integer id = null;
-		Integer route = null;
+		
+		//Integer route = null;
 		Integer airplaneId = null;
 		//String depTime;
+		String origin = null;
+		String dest = null;
 		String dt;
         Date dateFormat = null;
 		Integer reservedSeats = null;
@@ -40,15 +44,19 @@ public class AdminFlight implements AdminCrud<Flight> {
 		try {
 			sc.useDelimiter("\\t");
 			while (true) {
-				System.out.println("Enter a flight id:");
-				id = Integer.parseInt(sc.nextLine());
-				System.out.println("Select a route by its id:");
-				List<Route> routes = admin.readAllRoutes();
-				routes.forEach(r -> System.out.println(r)); //.getId() +" " + r.getOrgId() + " -> " + r.getDestId()));
-				System.out.println(routes);
-				route = Integer.parseInt(sc.nextLine());
+//				System.out.println("Enter a flight id:");
+//				id = Integer.parseInt(sc.nextLine());
+				System.out.println("Select an origin airport by its 3-char code:");
+				List<Airport> oAirports = admin.readAllAirports();
+				oAirports.forEach(a -> System.out.println(a.getAirportCode() + " " + a.getCity())); //.getId() +" " + r.getOrgId() + " -> " + r.getDestId()));
+				System.out.println(oAirports);
+				origin = sc.nextLine();
 				
-				
+				System.out.println("Select a destination airport by its 3-char code:");
+				List<Airport> dAirports = admin.readAllAirports();
+				dAirports.forEach(a -> System.out.println(a.getAirportCode() + " " + a.getCity())); //.getId() +" " + r.getOrgId() + " -> " + r.getDestId()));
+				System.out.println(dAirports);
+				dest = sc.nextLine();
 				
 				System.out.println("Select aircraft by its id");
 				admin.readAllAirplanes().forEach(a -> System.out.println(a.toString()));
@@ -78,16 +86,17 @@ public class AdminFlight implements AdminCrud<Flight> {
 		}
 		Timestamp dTime = new java.sql.Timestamp(dateFormat.getTime());
 		
-		
-		//Route route = new Route();
-		//Route route = admin.readRouteById(routeId);
+		Integer id = admin.readAllFlights().size() + 1;
+		Route route = new Route();
+		route.setOrgId(admin.readAirportByCode(origin));
+		route.setDestId(admin.readAirportByCode(dest));
+        Airplane a = new Airplane();
+        a.setId(airplaneId);
 
-
-		admin.addFlight(id, route, airplaneId, dTime, reservedSeats, seatPrice);
+		admin.addFlight(id, route, a, dTime, reservedSeats, seatPrice);
 
 	}
-
-
+	
 	public void update(Object obj) throws SQLException, ClassNotFoundException {
 		// TODO Auto-generated method stub
 

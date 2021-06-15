@@ -516,4 +516,47 @@ public class AdminService {
 	}
 
 
+	public void updateUser(User u) throws SQLException {
+    	Connection conn = null;
+    	try {
+    		conn = util.getConnection();
+    		UserDAO udao = new UserDAO(conn);
+    		
+    	    System.out.println();
+    	    System.out.println();
+
+    	
+    	    udao.update(u);
+    	    conn.commit();
+    	    System.out.println("User updated!");
+    	    pres.menu();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		
+    		conn.rollback();
+    		System.out.println("Request not completed!");
+    	} finally {
+    		conn.close();
+    	}
+		
+	}
+
+
+	public User readTravelerById(Integer id) throws SQLException {
+	   	Connection conn = null;
+    	List<User> u = new ArrayList<>();
+    	try {
+    		conn = util.getConnection();
+    		UserDAO udao = new UserDAO(conn);
+    		u = udao.readTravelerById(id);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		conn.rollback();
+    	} finally {
+    		conn.close();
+    	}
+    	return u.get(0);
+	}
+
+
 }

@@ -5,13 +5,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ss.utopia.dao.AirplaneDAO;
+import com.ss.utopia.dao.BookingDAO;
+import com.ss.utopia.dao.FlightBookingsDAO;
+import com.ss.utopia.dao.FlightDAO;
 import com.ss.utopia.dao.RouteDAO;
 import com.ss.utopia.dao.UserDAO;
+import com.ss.utopia.model.Booking;
+import com.ss.utopia.model.Flight;
+import com.ss.utopia.model.FlightBookings;
 import com.ss.utopia.model.Route;
 import com.ss.utopia.model.User;
+import com.ss.utopia.presentation.TravelerPresentation;
 
 public class TravelerService {
-
+    TravelerPresentation pres = new TravelerPresentation();
 	Util util = new Util();
 	
 	public TravelerService() {
@@ -56,8 +64,71 @@ public class TravelerService {
 	
 }
 
-	public void createBooking() {
+	public void createBooking(Booking booking, Flight flight) throws SQLException {
+    	Connection conn = null;
+    	try {
+    		conn = util.getConnection();
+    		FlightBookingsDAO fbdao = new FlightBookingsDAO(conn);
+    	    BookingDAO bdao = new BookingDAO(conn);
+            
+    	   
+    	    
+    	    
+    	    Integer bookingId = bdao.add(booking);
+    	    
+    	    
+    	    
+    	   
+    	    
+    	    fbdao.add(flight.getId(), bookingId);
+
+
+    		
+
+    		
+    	    conn.commit();
+    	    System.out.println("Booking added!");
+    		
+    		pres.menu();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		conn.rollback();
+    	} finally {
+    		conn.close();
+    	}
 		
+	}
+
+	public List<Flight> readAllFlights() throws SQLException {
+	  	Connection conn = null;
+    	List<Flight> flights = new ArrayList<>();
+    	try {
+    		conn = util.getConnection();
+    		FlightDAO fdao = new FlightDAO(conn);
+    		flights = fdao.readAllFlights();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		conn.rollback();
+    	} finally {
+    		conn.close();
+    	}
+    	return flights;
 		
+	}
+
+	public Flight findFlightById(Integer id) throws SQLException {
+	   	Connection conn = null;
+    	List<Flight> f = new ArrayList<>();
+    	try {
+    		conn = util.getConnection();
+    		FlightDAO fdao = new FlightDAO(conn);
+    		f = fdao.readFlightById(id);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		conn.rollback();
+    	} finally {
+    		conn.close();
+    	}
+    	return f.get(0);
 	}
 }

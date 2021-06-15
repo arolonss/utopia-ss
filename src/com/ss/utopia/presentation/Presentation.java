@@ -19,5 +19,5 @@ public abstract class Presentation {
 		
 	}
 
-	abstract public void menu() throws SQLException, ClassNotFoundException, ParseException;
+	abstract public void menu() throws SQLException, ClassNotFoundException, ParseException, Exception;
 }

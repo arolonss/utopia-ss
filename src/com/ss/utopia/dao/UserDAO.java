@@ -54,6 +54,10 @@ public class UserDAO extends BaseDAO<User> {
 
 	}
 
+	public List<User> readTravelerById(Integer id) throws ClassNotFoundException, SQLException {
+		return read("SELECT * FROM user where role_id = 3 and id = ?", new Object[] { id });
+	}
+
 	public List<User> readAllAdmins() throws SQLException, ClassNotFoundException {
 		return read("SELECT * FROM user where role_id = 2", null);
 	}
@@ -82,5 +86,6 @@ public class UserDAO extends BaseDAO<User> {
 		}
 		return users;
 	}
+
 
 }
