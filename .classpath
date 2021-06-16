@@ -6,10 +6,35 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/amanda/Downloads/mysql-connector-java-8.0.21.jar">
+	<classpathentry kind="lib" path="/Users/amanda/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/2.5.1/spring-boot-autoconfigure-2.5.1.jar" sourcepath="/Users/amanda/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/2.5.1/spring-boot-autoconfigure-2.5.1-sources.jar">
 		<attributes>
-			<attribute name="module" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="org.springframework.boot"/>
+			<attribute name="maven.artifactId" value="spring-boot-autoconfigure"/>
+			<attribute name="maven.version" value="2.5.1"/>
+			<attribute name="maven.scope" value="compile"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/Users/amanda/.m2/repository/org/springframework/boot/spring-boot/2.5.1/spring-boot-2.5.1.jar" sourcepath="/Users/amanda/.m2/repository/org/springframework/boot/spring-boot/2.5.1/spring-boot-2.5.1-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="org.springframework.boot"/>
+			<attribute name="maven.artifactId" value="spring-boot"/>
+			<attribute name="maven.version" value="2.5.1"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/amanda/Downloads/mysql-connector-java-8.0.21.jar"/>
+	<classpathentry kind="lib" path="/Users/amanda/.m2/repository/org/springframework/boot/spring-boot-test/2.5.1/spring-boot-test-2.5.1.jar" sourcepath="/Users/amanda/.m2/repository/org/springframework/boot/spring-boot-test/2.5.1/spring-boot-test-2.5.1-sources.jar">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="org.springframework.boot"/>
+			<attribute name="maven.artifactId" value="spring-boot-test"/>
+			<attribute name="maven.version" value="2.5.1"/>
+			<attribute name="maven.scope" value="test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/amanda/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE/Utopia/target/utopia-0.0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
